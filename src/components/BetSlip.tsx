@@ -4,17 +4,27 @@ import { Input } from '@/components/ui/input';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'sonner';
 import { Calculator, TrendingUp, Receipt, AlertTriangle } from 'lucide-react';
+import { supabase } from '@/lib/supabase';
 
 interface BetSlipProps {
   selectedFighter: string | null;
   odds: string;
   onLogin: () => void;
+  accountBalance: number;
+  onBetPlaced: () => Promise<void>;
 }
 
 const TAX_RATE = 0.16;
 
-export function BetSlip({ selectedFighter, odds, onLogin }: BetSlipProps) {
+export function BetSlip({
+  selectedFighter,
+  odds,
+  onLogin,
+  accountBalance,
+  onBetPlaced,
+}: BetSlipProps) {
   const [stake, setStake] = useState('');
+  const [placingBet, setPlacingBet] = useState(false);
   const { user } = useAuth();
 
   const numericOdds = parseFloat(odds);
@@ -24,7 +34,7 @@ export function BetSlip({ selectedFighter, odds, onLogin }: BetSlipProps) {
   const grossPayout = stakeAfterTax * numericOdds;
   const netProfit = grossPayout - stakeNum;
 
-  const handlePlaceBet = () => {
+  const handlePlaceBet = async () => {
     if (!user) {
       onLogin();
       return;
@@ -37,17 +47,42 @@ export function BetSlip({ selectedFighter, odds, onLogin }: BetSlipProps) {
       toast.error('Enter a valid stake');
       return;
     }
+    if (accountBalance <= 0) {
+      toast.error('You cannot place a bet with zero account balance');
+      return;
+    }
+    if (stakeNum > accountBalance) {
+      toast.error('Stake cannot be higher than your available account balance');
+      return;
+    }
+
+    setPlacingBet(true);
+    const { error } = await supabase.rpc('place_bet_as_draft', {
+      p_fighter: selectedFighter,
+      p_odds: numericOdds,
+      p_stake: stakeNum,
+      p_tax_rate: TAX_RATE,
+    });
+
+    setPlacingBet(false);
+
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+
     toast.success(
-      `Bet placed! KSH ${stakeNum.toFixed(2)} on ${selectedFighter} at ${odds} odds. Potential payout: KSH ${grossPayout.toFixed(2)}`
+      `Draft bet saved! KSH ${stakeNum.toFixed(2)} on ${selectedFighter}. Potential payout: KSH ${grossPayout.toFixed(2)}`
     );
+
     setStake('');
+    await onBetPlaced();
   };
 
   const quickAmounts = [50, 100, 200, 500, 1000];
 
   return (
     <div className="w-full max-w-md mx-auto bg-card border border-border rounded-xl overflow-hidden">
-      {/* Header */}
       <div className="p-4 border-b border-border bg-secondary/50">
         <h3 className="font-display text-xl tracking-wider text-center flex items-center justify-center gap-2">
           <Receipt className="h-5 w-5 text-gold" />
@@ -58,7 +93,6 @@ export function BetSlip({ selectedFighter, odds, onLogin }: BetSlipProps) {
       <div className="p-6">
         {selectedFighter ? (
           <div className="space-y-5">
-            {/* Fighter & Odds */}
             <div className="flex items-center justify-between p-3 rounded-lg bg-secondary/50 border border-border">
               <div>
                 <p className="text-xs text-muted-foreground uppercase tracking-wider">Your Pick</p>
@@ -70,7 +104,16 @@ export function BetSlip({ selectedFighter, odds, onLogin }: BetSlipProps) {
               </div>
             </div>
 
-            {/* Stake Input */}
+            <div className="rounded-lg border border-border p-3 bg-secondary/20 text-sm">
+              <div className="flex items-center justify-between">
+                <span className="text-muted-foreground">Available Balance</span>
+                <span className="font-semibold text-gold">KSH {accountBalance.toFixed(2)}</span>
+              </div>
+              <p className="text-xs text-muted-foreground mt-1">
+                Bet stake must be more than 0 and not greater than your current balance.
+              </p>
+            </div>
+
             <div className="space-y-2">
               <label className="text-sm text-muted-foreground flex items-center gap-1.5">
                 <Calculator className="h-3.5 w-3.5" />
@@ -84,7 +127,6 @@ export function BetSlip({ selectedFighter, odds, onLogin }: BetSlipProps) {
                 placeholder="Enter amount"
                 className="bg-secondary border-border text-lg font-display h-12"
               />
-              {/* Quick amounts */}
               <div className="flex gap-2 flex-wrap">
                 {quickAmounts.map((amt) => (
                   <button
@@ -98,10 +140,8 @@ export function BetSlip({ selectedFighter, odds, onLogin }: BetSlipProps) {
               </div>
             </div>
 
-            {/* Payout Breakdown */}
             {stakeNum > 0 && (
               <div className="space-y-1 rounded-lg border border-border overflow-hidden">
-                {/* Breakdown rows */}
                 <div className="bg-secondary/30 p-3 space-y-2">
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-muted-foreground">Stake</span>
@@ -121,31 +161,26 @@ export function BetSlip({ selectedFighter, odds, onLogin }: BetSlipProps) {
                   </div>
                 </div>
 
-                {/* Payout highlight */}
                 <div className="bg-accent/10 border-t border-accent/20 p-4">
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-semibold flex items-center gap-1.5">
                       <TrendingUp className="h-4 w-4 text-gold" />
                       Potential Payout
                     </span>
-                    <span className="font-display text-3xl text-gold">
-                      KSH {grossPayout.toFixed(2)}
-                    </span>
+                    <span className="font-display text-3xl text-gold">KSH {grossPayout.toFixed(2)}</span>
                   </div>
                   {netProfit > 0 && (
                     <div className="flex items-center justify-between mt-1">
                       <span className="text-xs text-muted-foreground">Net Profit</span>
-                      <span className="text-sm text-gold font-semibold">
-                        + KSH {netProfit.toFixed(2)}
-                      </span>
+                      <span className="text-sm text-gold font-semibold">+ KSH {netProfit.toFixed(2)}</span>
                     </div>
                   )}
                 </div>
               </div>
             )}
 
-            <Button variant="gold" size="lg" className="w-full" onClick={handlePlaceBet}>
-              {user ? 'Place Bet' : 'Sign In to Bet'}
+            <Button variant="gold" size="lg" className="w-full" onClick={handlePlaceBet} disabled={placingBet}>
+              {placingBet ? 'Placing Bet...' : user ? 'Place Bet' : 'Sign In to Bet'}
             </Button>
 
             <div className="flex items-start gap-2 p-2 rounded-md bg-destructive/10 border border-destructive/20">
@@ -156,9 +191,7 @@ export function BetSlip({ selectedFighter, odds, onLogin }: BetSlipProps) {
             </div>
           </div>
         ) : (
-          <p className="text-center text-muted-foreground text-sm py-8">
-            Select a fighter to place your bet
-          </p>
+          <p className="text-center text-muted-foreground text-sm py-8">Select a fighter to place your bet</p>
         )}
       </div>
     </div>
