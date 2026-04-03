@@ -91,6 +91,7 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
             </button>
           </p>
         </form>
+        </div>
       </DialogContent>
     </Dialog>
   );
