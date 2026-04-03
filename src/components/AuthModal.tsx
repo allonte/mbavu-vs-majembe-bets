@@ -34,11 +34,7 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
     if (error) {
       toast.error(error.message);
     } else {
-      const signUpMessage = 'session' in result && result.session
-        ? 'Account created! You are now signed in.'
-        : 'Account created! You can sign in right away.';
-
-      toast.success(isLogin ? 'Welcome back!' : signUpMessage);
+      toast.success(isLogin ? 'Welcome back!' : 'Account created! You are now signed in.');
       onOpenChange(false);
       setEmail('');
       setPassword('');
