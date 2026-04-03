@@ -23,16 +23,22 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
     e.preventDefault();
     setLoading(true);
 
-    const { error } = isLogin
+    const result = isLogin
       ? await signIn(email, password)
       : await signUp(email, password);
+
+    const { error } = result;
 
     setLoading(false);
 
     if (error) {
       toast.error(error.message);
     } else {
-      toast.success(isLogin ? 'Welcome back!' : 'Account created! Check your email.');
+      const signUpMessage = 'session' in result && result.session
+        ? 'Account created! You are now signed in.'
+        : 'Account created! You can sign in right away.';
+
+      toast.success(isLogin ? 'Welcome back!' : signUpMessage);
       onOpenChange(false);
       setEmail('');
       setPassword('');
