@@ -47,7 +47,7 @@ export default function Index() {
 
         <div className="container relative z-10 text-center">
           <p className="text-xs md:text-sm uppercase tracking-[0.3em] text-muted-foreground mb-2">
-            Championship Fight • Saturday, April 12
+            Championship Fight • Saturday, April 4, 2026
           </p>
           <h1 className="font-display text-5xl md:text-8xl lg:text-9xl tracking-wider leading-none">
             <span className="text-primary">MBAVU</span>
