@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'sonner';
+import vuruguPoster from '@/assets/vurugu-poster.jpg';
 
 interface AuthModalProps {
   open: boolean;
@@ -40,7 +41,11 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="bg-card border-border sm:max-w-md">
+      <DialogContent className="bg-card border-border sm:max-w-md p-0 overflow-hidden">
+        <div className="w-full h-40 overflow-hidden">
+          <img src={vuruguPoster} alt="VURUGU Fight Night" className="w-full h-full object-cover object-top" />
+        </div>
+        <div className="px-6 pb-6">
         <DialogHeader>
           <DialogTitle className="font-display text-3xl tracking-wider text-center">
             {isLogin ? 'Sign In' : 'Create Account'}
@@ -86,6 +91,7 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
             </button>
           </p>
         </form>
+        </div>
       </DialogContent>
     </Dialog>
   );
