@@ -74,6 +74,9 @@ export default function Index() {
         </div>
       </section>
 
+      {/* Account Balance */}
+      {user && <AccountBalance />}
+
       {/* Bet Slip */}
       <section className="container pb-20">
         <BetSlip
