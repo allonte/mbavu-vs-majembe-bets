@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'sonner';
+import vuruguPoster from '@/assets/vurugu-poster.jpg';
 
 interface AuthModalProps {
   open: boolean;
