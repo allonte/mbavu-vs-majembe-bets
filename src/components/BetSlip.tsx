@@ -15,6 +15,14 @@ interface BetSlipProps {
 }
 
 const TAX_RATE = 0.16;
+interface SavedBetSlip {
+  id: string;
+  fighter: string;
+  stake: number;
+  odds: number;
+  gross_payout: number;
+  status: 'draft' | 'placed' | 'cancelled';
+}
 
 export function BetSlip({
   selectedFighter,
@@ -25,6 +33,7 @@ export function BetSlip({
 }: BetSlipProps) {
   const [stake, setStake] = useState('');
   const [placingBet, setPlacingBet] = useState(false);
+  const [lastSavedBet, setLastSavedBet] = useState<SavedBetSlip | null>(null);
   const { user } = useAuth();
 
   const numericOdds = parseFloat(odds);
@@ -57,10 +66,11 @@ export function BetSlip({
     }
 
     setPlacingBet(true);
-    const { error } = await supabase.rpc('place_bet_as_draft', {
+    const { data, error } = await supabase.rpc('place_bet_as_draft', {
       p_fighter: selectedFighter,
       p_odds: numericOdds,
       p_stake: stakeNum,
+      p_tax_rate: TAX_RATE,
     });
 
     setPlacingBet(false);
@@ -73,6 +83,10 @@ export function BetSlip({
     toast.success(
       `Draft bet saved! KSH ${stakeNum.toFixed(2)} on ${selectedFighter}. Potential payout: KSH ${grossPayout.toFixed(2)}`
     );
+
+    if (data) {
+      setLastSavedBet(data as SavedBetSlip);
+    }
 
     setStake('');
     await onBetPlaced();
@@ -181,6 +195,24 @@ export function BetSlip({
             <Button variant="gold" size="lg" className="w-full" onClick={handlePlaceBet} disabled={placingBet}>
               {placingBet ? 'Placing Bet...' : user ? 'Place Bet' : 'Sign In to Bet'}
             </Button>
+
+            {lastSavedBet && (
+              <div className="rounded-lg border border-accent/30 bg-accent/10 p-3">
+                <p className="text-xs uppercase tracking-wider text-muted-foreground">Saved Bet Slip</p>
+                <div className="mt-1 flex items-center justify-between text-sm">
+                  <span>{lastSavedBet.fighter}</span>
+                  <span className="text-gold">× {Number(lastSavedBet.odds).toFixed(2)}</span>
+                </div>
+                <div className="mt-1 flex items-center justify-between text-sm">
+                  <span className="text-muted-foreground">Stake</span>
+                  <span>KSH {Number(lastSavedBet.stake).toFixed(2)}</span>
+                </div>
+                <div className="mt-1 flex items-center justify-between text-sm">
+                  <span className="text-muted-foreground">Potential payout</span>
+                  <span className="font-semibold text-gold">KSH {Number(lastSavedBet.gross_payout).toFixed(2)}</span>
+                </div>
+              </div>
+            )}
 
             <div className="flex items-start gap-2 p-2 rounded-md bg-destructive/10 border border-destructive/20">
               <AlertTriangle className="h-3.5 w-3.5 text-destructive shrink-0 mt-0.5" />
