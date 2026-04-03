@@ -81,7 +81,7 @@ export function BetSlip({
     }
 
     toast.success(
-      `Draft bet saved! KSH ${stakeNum.toFixed(2)} on ${selectedFighter}. Potential payout: KSH ${grossPayout.toFixed(2)}`
+      `Bet placed! KSH ${stakeNum.toFixed(2)} on ${selectedFighter}. Potential payout: KSH ${grossPayout.toFixed(2)}`
     );
 
     if (data) {
@@ -198,7 +198,7 @@ export function BetSlip({
 
             {lastSavedBet && (
               <div className="rounded-lg border border-accent/30 bg-accent/10 p-3">
-                <p className="text-xs uppercase tracking-wider text-muted-foreground">Saved Bet Slip</p>
+                <p className="text-xs uppercase tracking-wider text-muted-foreground">Latest Bet Slip</p>
                 <div className="mt-1 flex items-center justify-between text-sm">
                   <span>{lastSavedBet.fighter}</span>
                   <span className="text-gold">× {Number(lastSavedBet.odds).toFixed(2)}</span>
