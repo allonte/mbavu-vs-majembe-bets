@@ -1,9 +1,5 @@
--- Run this in Supabase SQL Editor to fix:
--- "Could not find the function public.place_bet_as_draft(...) in the schema cache"
+-- Ensure placed bets are persisted with status='placed' while stake deduction remains atomic.
 
-begin;
-
--- Ensure the 4-argument RPC exists (the app calls this signature).
 create or replace function public.place_bet_as_draft(
   p_fighter text,
   p_odds numeric,
@@ -22,6 +18,7 @@ declare
   v_stake_after_tax numeric(12, 2);
   v_gross_payout numeric(12, 2);
   v_bet public.bet_slips;
+  v_new_balance numeric(12, 2);
 begin
   if v_user_id is null then
     raise exception 'You must be signed in to place a bet';
@@ -82,63 +79,21 @@ begin
   )
   returning * into v_bet;
 
+  if v_bet.id is null then
+    raise exception 'Failed to save bet slip';
+  end if;
+
   update public.account_balances
   set balance = round((balance - p_stake)::numeric, 2)
-  where user_id = v_user_id;
+  where user_id = v_user_id
+  returning balance into v_new_balance;
+
+  if v_new_balance is null then
+    raise exception 'Failed to deduct stake from account balance';
+  end if;
 
   return v_bet;
 end;
 $$;
 
 grant execute on function public.place_bet_as_draft(text, numeric, numeric, numeric) to authenticated;
-
--- Optional compatibility overload for clients that pass only 3 args.
-create or replace function public.place_bet_as_draft(
-  p_fighter text,
-  p_odds numeric,
-  p_stake numeric
-)
-returns public.bet_slips
-language sql
-security definer
-set search_path = public
-as $$
-  select public.place_bet_as_draft(
-    p_fighter => p_fighter,
-    p_odds => p_odds,
-    p_stake => p_stake,
-    p_tax_rate => 0.16
-  );
-$$;
-
-grant execute on function public.place_bet_as_draft(text, numeric, numeric) to authenticated;
-
-commit;
-
--- Force PostgREST/Supabase API to refresh RPC cache immediately.
-select pg_notify('pgrst', 'reload schema');
-
--- Verification: these signatures should exist.
-select
-  n.nspname as schema,
-  p.proname as function,
-  pg_get_function_identity_arguments(p.oid) as args
-from pg_proc p
-join pg_namespace n on n.oid = p.pronamespace
-where n.nspname = 'public'
-  and p.proname = 'place_bet_as_draft'
-order by args;
-
-
--- Transactional verification (run after placing a bet):
--- 1) most recent bet should exist with status='placed'
-select id, user_id, fighter, stake, status, created_at
-from public.bet_slips
-where user_id = auth.uid()
-order by created_at desc
-limit 1;
-
--- 2) balance should be reduced by exactly the placed stake
-select user_id, balance
-from public.account_balances
-where user_id = auth.uid();
