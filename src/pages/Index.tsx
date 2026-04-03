@@ -5,15 +5,12 @@ import { BetSlip } from '@/components/BetSlip';
 import { AuthModal } from '@/components/AuthModal';
 import { AccountBalance } from '@/components/AccountBalance';
 import { useAuth } from '@/hooks/useAuth';
-import mbavuImg from '@/assets/fighter-mbavu.jpg';
-import majembeImg from '@/assets/fighter-majembe.jpg';
-
 const fighters = [
   {
     id: 'mbavu',
     name: 'MBAVU',
     nickname: 'The Destroyer',
-    image: mbavuImg,
+    image: '/mbavu.jpeg',
     record: '28-2-0 (24 KOs)',
     odds: '4.20',
     corner: 'red' as const,
@@ -22,7 +19,7 @@ const fighters = [
     id: 'majembe',
     name: 'MAJEMBE',
     nickname: 'The Iron Fist',
-    image: majembeImg,
+    image: '/majembe.jpeg',
     record: '25-4-1 (19 KOs)',
     odds: '1.80',
     corner: 'blue' as const,
