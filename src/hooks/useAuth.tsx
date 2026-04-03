@@ -1,6 +1,5 @@
 import { useState, useEffect, createContext, useContext, ReactNode } from 'react';
 import { supabase } from '@/lib/supabase';
-import { ensureAccountBalance } from '@/lib/accountBalance';
 import type { User, Session } from '@supabase/supabase-js';
 
 interface AuthContextType {
@@ -43,10 +42,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     if (data.session) {
-      const ensureResult = await ensureAccountBalance(data.session.user.id);
-      if (ensureResult.error) {
-        return { error: ensureResult.error, session: null };
-      }
       return { error: null, session: data.session };
     }
 
@@ -55,26 +50,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       password,
     });
 
-    if (signInError || !signInData.session) {
-      return { error: signInError, session: signInData.session };
-    }
-
-    const ensureResult = await ensureAccountBalance(signInData.session.user.id);
-    if (ensureResult.error) {
-      return { error: ensureResult.error, session: null };
-    }
-
-    return { error: null, session: signInData.session };
+    return { error: signInError, session: signInData.session };
   };
 
   const signIn = async (email: string, password: string) => {
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error || !data.session) {
-      return { error };
-    }
-
-    const ensureResult = await ensureAccountBalance(data.session.user.id);
-    return { error: ensureResult.error };
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    return { error };
   };
 
   const signOut = async () => {
