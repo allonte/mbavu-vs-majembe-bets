@@ -41,7 +41,11 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="bg-card border-border sm:max-w-md">
+      <DialogContent className="bg-card border-border sm:max-w-md p-0 overflow-hidden">
+        <div className="w-full h-40 overflow-hidden">
+          <img src={vuruguPoster} alt="VURUGU Fight Night" className="w-full h-full object-cover object-top" />
+        </div>
+        <div className="px-6 pb-6">
         <DialogHeader>
           <DialogTitle className="font-display text-3xl tracking-wider text-center">
             {isLogin ? 'Sign In' : 'Create Account'}
