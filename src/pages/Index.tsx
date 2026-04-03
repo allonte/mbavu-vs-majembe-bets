@@ -3,6 +3,8 @@ import { Navbar } from '@/components/Navbar';
 import { FighterCard } from '@/components/FighterCard';
 import { BetSlip } from '@/components/BetSlip';
 import { AuthModal } from '@/components/AuthModal';
+import { AccountBalance } from '@/components/AccountBalance';
+import { useAuth } from '@/hooks/useAuth';
 import mbavuImg from '@/assets/fighter-mbavu.jpg';
 import majembeImg from '@/assets/fighter-majembe.jpg';
 
@@ -30,6 +32,7 @@ const fighters = [
 export default function Index() {
   const [selected, setSelected] = useState<string | null>(null);
   const [authOpen, setAuthOpen] = useState(false);
+  const { user } = useAuth();
 
   const selectedFighter = fighters.find((f) => f.id === selected);
 
@@ -70,6 +73,9 @@ export default function Index() {
           ))}
         </div>
       </section>
+
+      {/* Account Balance */}
+      {user && <AccountBalance />}
 
       {/* Bet Slip */}
       <section className="container pb-20">
