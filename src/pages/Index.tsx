@@ -15,7 +15,7 @@ const fighters = [
     nickname: 'The Destroyer',
     image: mbavuImg,
     record: '28-2-0 (24 KOs)',
-    odds: '1.65',
+    odds: '4.20',
     corner: 'red' as const,
   },
   {
@@ -24,7 +24,7 @@ const fighters = [
     nickname: 'The Iron Fist',
     image: majembeImg,
     record: '25-4-1 (19 KOs)',
-    odds: '2.30',
+    odds: '1.80',
     corner: 'blue' as const,
   },
 ];
