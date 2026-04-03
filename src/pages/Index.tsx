@@ -3,6 +3,8 @@ import { Navbar } from '@/components/Navbar';
 import { FighterCard } from '@/components/FighterCard';
 import { BetSlip } from '@/components/BetSlip';
 import { AuthModal } from '@/components/AuthModal';
+import { AccountBalance } from '@/components/AccountBalance';
+import { useAuth } from '@/hooks/useAuth';
 import mbavuImg from '@/assets/fighter-mbavu.jpg';
 import majembeImg from '@/assets/fighter-majembe.jpg';
 
