@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useAuth } from '@/hooks/useAuth';
+import { getAccountBalance } from '@/lib/accountBalance';
+import { supabase } from '@/lib/supabase';
 import { toast } from 'sonner';
 import { Calculator, TrendingUp, Receipt, AlertTriangle } from 'lucide-react';
 
@@ -24,7 +26,7 @@ export function BetSlip({ selectedFighter, odds, onLogin }: BetSlipProps) {
   const grossPayout = stakeAfterTax * numericOdds;
   const netProfit = grossPayout - stakeNum;
 
-  const handlePlaceBet = () => {
+  const handlePlaceBet = async () => {
     if (!user) {
       onLogin();
       return;
@@ -37,6 +39,24 @@ export function BetSlip({ selectedFighter, odds, onLogin }: BetSlipProps) {
       toast.error('Enter a valid stake');
       return;
     }
+    const { balance, error: balanceError } = await getAccountBalance(user.id);
+    if (balanceError) {
+      toast.error('Could not verify your account balance. Try again.');
+      return;
+    }
+    if (balance < stakeNum) {
+      toast.error(`Insufficient balance. Available: KSH ${balance.toFixed(2)}`);
+      return;
+    }
+
+    const { error: betError } = await supabase.rpc('place_bet', {
+      stake_amount: stakeNum,
+    });
+    if (betError) {
+      toast.error(betError.message);
+      return;
+    }
+
     toast.success(
       `Bet placed! KSH ${stakeNum.toFixed(2)} on ${selectedFighter} at ${odds} odds. Potential payout: KSH ${grossPayout.toFixed(2)}`
     );
