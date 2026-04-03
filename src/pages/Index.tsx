@@ -32,6 +32,7 @@ const fighters = [
 export default function Index() {
   const [selected, setSelected] = useState<string | null>(null);
   const [authOpen, setAuthOpen] = useState(false);
+  const { user } = useAuth();
 
   const selectedFighter = fighters.find((f) => f.id === selected);
 
