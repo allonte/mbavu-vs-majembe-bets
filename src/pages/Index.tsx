@@ -15,7 +15,7 @@ const fighters = [
     nickname: 'The Destroyer',
     image: mbavuImg,
     record: '28-2-0 (24 KOs)',
-    odds: '1.65',
+    odds: '4.20',
     corner: 'red' as const,
   },
   {
@@ -24,7 +24,7 @@ const fighters = [
     nickname: 'The Iron Fist',
     image: majembeImg,
     record: '25-4-1 (19 KOs)',
-    odds: '2.30',
+    odds: '1.80',
     corner: 'blue' as const,
   },
 ];
@@ -100,7 +100,7 @@ export default function Index() {
               </div>
               <div className="flex gap-4">
                 <span className="text-sm text-muted-foreground">Win</span>
-                <span className="font-display text-lg text-primary">1.65</span>
+                <span className="font-display text-lg text-primary">4.20</span>
               </div>
             </div>
             <div className="flex items-center justify-between p-4">
@@ -110,7 +110,7 @@ export default function Index() {
               </div>
               <div className="flex gap-4">
                 <span className="text-sm text-muted-foreground">Win</span>
-                <span className="font-display text-lg text-gold">2.30</span>
+                <span className="font-display text-lg text-gold">1.80</span>
               </div>
             </div>
             <div className="flex items-center justify-between p-4">
