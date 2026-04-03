@@ -13,8 +13,8 @@ export function Navbar() {
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
         <div className="container flex h-16 items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="font-display text-2xl tracking-widest text-primary">RING</span>
-            <span className="font-display text-2xl tracking-widest text-gold">BET</span>
+            <span className="font-display text-xl md:text-2xl tracking-widest text-primary">mbavu</span>
+            <span className="font-display text-xl md:text-2xl tracking-widest text-gold">majembebet</span>
           </div>
           <div>
             {user ? (
