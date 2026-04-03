@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
-import { ensureAccountBalance, getAccountBalance } from '@/lib/accountBalance';
 import { Button } from '@/components/ui/button';
 import { Wallet, Phone, Clock, AlertTriangle } from 'lucide-react';
 import {
@@ -13,33 +12,8 @@ import {
 export function AccountBalance() {
   const { user } = useAuth();
   const [depositOpen, setDepositOpen] = useState(false);
-  const [balance, setBalance] = useState<number | null>(null);
 
   if (!user) return null;
-
-  useEffect(() => {
-    let mounted = true;
-
-    const loadBalance = async () => {
-      const ensureResult = await ensureAccountBalance(user.id);
-      if (ensureResult.error) {
-        return;
-      }
-
-      const { balance: currentBalance, error } = await getAccountBalance(user.id);
-      if (!mounted || error) {
-        return;
-      }
-
-      setBalance(currentBalance);
-    };
-
-    loadBalance();
-
-    return () => {
-      mounted = false;
-    };
-  }, [user.id]);
 
   return (
     <>
@@ -50,9 +24,7 @@ export function AccountBalance() {
               <Wallet className="h-5 w-5 text-gold" />
               Account Balance
             </h3>
-            <span className="font-display text-3xl text-gold">
-              {balance === null ? 'Loading...' : `KSH ${balance.toFixed(2)}`}
-            </span>
+            <span className="font-display text-3xl text-gold">KSH 0.00</span>
           </div>
 
           <Button
