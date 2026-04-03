@@ -12,6 +12,9 @@ export function useAccountBalance(userId?: string) {
     }
 
     setLoading(true);
+
+    await supabase.rpc('ensure_my_account_balance');
+
     const { data, error } = await supabase
       .from('account_balances')
       .select('balance')
