@@ -100,7 +100,7 @@ export default function Index() {
               </div>
               <div className="flex gap-4">
                 <span className="text-sm text-muted-foreground">Win</span>
-                <span className="font-display text-lg text-primary">1.65</span>
+                <span className="font-display text-lg text-primary">4.20</span>
               </div>
             </div>
             <div className="flex items-center justify-between p-4">
@@ -110,7 +110,7 @@ export default function Index() {
               </div>
               <div className="flex gap-4">
                 <span className="text-sm text-muted-foreground">Win</span>
-                <span className="font-display text-lg text-gold">2.30</span>
+                <span className="font-display text-lg text-gold">1.80</span>
               </div>
             </div>
             <div className="flex items-center justify-between p-4">
