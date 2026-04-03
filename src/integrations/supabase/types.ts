@@ -14,13 +14,38 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      account_balances: {
+        Row: {
+          balance: number
+          created_at: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          balance?: number
+          created_at?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          balance?: number
+          created_at?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      place_bet: {
+        Args: {
+          stake_amount: number
+        }
+        Returns: number
+      }
     }
     Enums: {
       [_ in never]: never
