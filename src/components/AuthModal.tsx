@@ -90,6 +90,9 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
               {isLogin ? 'Sign Up' : 'Sign In'}
             </button>
           </p>
+          <div className="mt-4 p-3 rounded-lg bg-destructive/10 border border-destructive/30 text-center">
+            <p className="text-xs font-semibold text-destructive">⚠️ Betting can be addictive. Not for under 18.</p>
+          </div>
         </form>
         </div>
       </DialogContent>
