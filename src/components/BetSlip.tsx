@@ -135,7 +135,7 @@ export function BetSlip({ selectedFighter, odds, onLogin }: BetSlipProps) {
                   {netProfit > 0 && (
                     <div className="flex items-center justify-between mt-1">
                       <span className="text-xs text-muted-foreground">Net Profit</span>
-                      <span className="text-sm text-green-400 font-semibold">
+                      <span className="text-sm text-gold font-semibold">
                         + KSH {netProfit.toFixed(2)}
                       </span>
                     </div>
