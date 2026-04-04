@@ -4,6 +4,8 @@ import { FighterCard } from '@/components/FighterCard';
 import { BetSlip } from '@/components/BetSlip';
 import { AuthModal } from '@/components/AuthModal';
 import { AccountBalance } from '@/components/AccountBalance';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
 import { useAccountBalance } from '@/hooks/useAccountBalance';
 
@@ -31,6 +33,8 @@ const fighters = [
 export default function Index() {
   const [selected, setSelected] = useState<string | null>(null);
   const [authOpen, setAuthOpen] = useState(false);
+  const [mpesaNumber, setMpesaNumber] = useState('');
+  const [withdrawRequested, setWithdrawRequested] = useState(false);
   const { user } = useAuth();
   const { balance, loading, refreshBalance } = useAccountBalance(user?.id);
 
@@ -73,6 +77,36 @@ export default function Index() {
       </section>
 
       {user && <AccountBalance balance={balance} loading={loading} />}
+
+      <section className="container pb-10">
+        <div className="max-w-2xl mx-auto bg-card border border-border rounded-xl p-6">
+          <h2 className="font-display text-xl tracking-wider text-center mb-2">Withdraw</h2>
+          <p className="text-sm text-muted-foreground text-center mb-4">
+            Enter your M-Pesa number to request a withdrawal.
+          </p>
+          <form
+            className="flex flex-col sm:flex-row gap-3"
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (!mpesaNumber.trim()) return;
+              setWithdrawRequested(true);
+            }}
+          >
+            <Input
+              type="tel"
+              placeholder="e.g. 07XXXXXXXX"
+              value={mpesaNumber}
+              onChange={(e) => setMpesaNumber(e.target.value)}
+            />
+            <Button type="submit">Request Withdrawal</Button>
+          </form>
+          {withdrawRequested && (
+            <p className="text-sm text-center text-muted-foreground mt-4">
+              Withdrawal request received. The system will update after 30 mins.
+            </p>
+          )}
+        </div>
+      </section>
 
       <section className="container pb-20">
         <BetSlip
