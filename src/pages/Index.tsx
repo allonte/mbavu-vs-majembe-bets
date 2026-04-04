@@ -121,9 +121,11 @@ export default function Index() {
           odds={selectedFighter?.odds ?? '0'}
           onLogin={() => setAuthOpen(true)}
           accountBalance={balance}
-          onBetPlaced={refreshBalance}
+          onBetPlaced={handleBetPlaced}
         />
       </section>
+
+      {user && <BetHistory refreshKey={betRefreshKey} />}
 
       <section className="container pb-20">
         <div className="max-w-2xl mx-auto bg-card border border-border rounded-xl overflow-hidden">
