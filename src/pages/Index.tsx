@@ -36,8 +36,14 @@ export default function Index() {
   const [authOpen, setAuthOpen] = useState(false);
   const [mpesaNumber, setMpesaNumber] = useState('');
   const [withdrawRequested, setWithdrawRequested] = useState(false);
+  const [betRefreshKey, setBetRefreshKey] = useState(0);
   const { user } = useAuth();
   const { balance, loading, refreshBalance } = useAccountBalance(user?.id);
+
+  const handleBetPlaced = async () => {
+    await refreshBalance();
+    setBetRefreshKey((k) => k + 1);
+  };
 
   const selectedFighter = fighters.find((f) => f.id === selected);
 
