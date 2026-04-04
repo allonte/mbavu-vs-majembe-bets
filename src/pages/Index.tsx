@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Navbar } from '@/components/Navbar';
 import { FighterCard } from '@/components/FighterCard';
 import { BetSlip } from '@/components/BetSlip';
+import { BetHistory } from '@/components/BetHistory';
 import { AuthModal } from '@/components/AuthModal';
 import { AccountBalance } from '@/components/AccountBalance';
 import { Input } from '@/components/ui/input';
