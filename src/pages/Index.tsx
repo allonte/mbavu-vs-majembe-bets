@@ -85,13 +85,6 @@ export default function Index() {
 
       {user && (
         <>
-          <div className="container pb-4">
-            <div className="max-w-4xl mx-auto bg-card/70 border border-border rounded-lg overflow-hidden">
-              <marquee className="py-2 px-3 text-sm font-medium text-gold">
-                If you have paid and balance not updated, sign up again with an email that has your M-Pesa name at least one.
-              </marquee>
-            </div>
-          </div>
           <AccountBalance balance={balance} loading={loading} />
         </>
       )}
