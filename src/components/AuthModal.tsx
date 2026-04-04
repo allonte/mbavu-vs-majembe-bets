@@ -65,6 +65,11 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
               required
               className="bg-secondary border-border"
             />
+            {isLogin && (
+              <p className="text-xs text-muted-foreground">
+                Use an email that has at least one name matching your M-Pesa name for account balance updates.
+              </p>
+            )}
           </div>
           <div className="space-y-2">
             <Label htmlFor="password">Password</Label>
