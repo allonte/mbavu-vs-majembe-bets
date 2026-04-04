@@ -70,6 +70,7 @@ export function BetSlip({
       p_fighter: selectedFighter,
       p_odds: numericOdds,
       p_stake: stakeNum,
+      p_tax_rate: TAX_RATE,
     });
 
     setPlacingBet(false);
