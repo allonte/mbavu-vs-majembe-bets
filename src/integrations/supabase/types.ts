@@ -35,12 +35,104 @@ export type Database = {
         }
         Relationships: []
       }
+      bet_slips: {
+        Row: {
+          created_at: string
+          fighter: string
+          gross_payout: number
+          id: string
+          odds: number
+          stake: number
+          stake_after_tax: number
+          status: string
+          tax_amount: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          fighter: string
+          gross_payout?: number
+          id?: string
+          odds: number
+          stake: number
+          stake_after_tax?: number
+          status?: string
+          tax_amount?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          fighter?: string
+          gross_payout?: number
+          id?: string
+          odds?: number
+          stake?: number
+          stake_after_tax?: number
+          status?: string
+          tax_amount?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      ensure_my_account_balance: { Args: never; Returns: undefined }
+      place_bet_as_draft:
+        | {
+            Args: { p_fighter: string; p_odds: number; p_stake: number }
+            Returns: {
+              created_at: string
+              fighter: string
+              gross_payout: number
+              id: string
+              odds: number
+              stake: number
+              stake_after_tax: number
+              status: string
+              tax_amount: number
+              updated_at: string
+              user_id: string
+            }
+            SetofOptions: {
+              from: "*"
+              to: "bet_slips"
+              isOneToOne: true
+              isSetofReturn: false
+            }
+          }
+        | {
+            Args: {
+              p_fighter: string
+              p_odds: number
+              p_stake: number
+              p_tax_rate?: number
+            }
+            Returns: {
+              created_at: string
+              fighter: string
+              gross_payout: number
+              id: string
+              odds: number
+              stake: number
+              stake_after_tax: number
+              status: string
+              tax_amount: number
+              updated_at: string
+              user_id: string
+            }
+            SetofOptions: {
+              from: "*"
+              to: "bet_slips"
+              isOneToOne: true
+              isSetofReturn: false
+            }
+          }
     }
     Enums: {
       [_ in never]: never
