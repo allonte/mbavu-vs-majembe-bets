@@ -66,7 +66,7 @@ export function BetSlip({
     }
 
     setPlacingBet(true);
-    const { data, error } = await supabase.rpc('place_bet_as_draft', {
+    const { data, error } = await (supabase.rpc as any)('place_bet_as_draft', {
       p_fighter: selectedFighter,
       p_odds: numericOdds,
       p_stake: stakeNum,
