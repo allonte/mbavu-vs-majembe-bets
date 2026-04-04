@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Navbar } from '@/components/Navbar';
 import { FighterCard } from '@/components/FighterCard';
 import { BetSlip } from '@/components/BetSlip';
+import { BetHistory } from '@/components/BetHistory';
 import { AuthModal } from '@/components/AuthModal';
 import { AccountBalance } from '@/components/AccountBalance';
 import { Input } from '@/components/ui/input';
@@ -35,8 +36,14 @@ export default function Index() {
   const [authOpen, setAuthOpen] = useState(false);
   const [mpesaNumber, setMpesaNumber] = useState('');
   const [withdrawRequested, setWithdrawRequested] = useState(false);
+  const [betRefreshKey, setBetRefreshKey] = useState(0);
   const { user } = useAuth();
   const { balance, loading, refreshBalance } = useAccountBalance(user?.id);
+
+  const handleBetPlaced = async () => {
+    await refreshBalance();
+    setBetRefreshKey((k) => k + 1);
+  };
 
   const selectedFighter = fighters.find((f) => f.id === selected);
 
@@ -114,9 +121,11 @@ export default function Index() {
           odds={selectedFighter?.odds ?? '0'}
           onLogin={() => setAuthOpen(true)}
           accountBalance={balance}
-          onBetPlaced={refreshBalance}
+          onBetPlaced={handleBetPlaced}
         />
       </section>
+
+      {user && <BetHistory refreshKey={betRefreshKey} />}
 
       <section className="container pb-20">
         <div className="max-w-2xl mx-auto bg-card border border-border rounded-xl overflow-hidden">
