@@ -99,7 +99,7 @@ export function BetSlip({
       <div className="p-4 border-b border-border bg-secondary/50">
         <h3 className="font-display text-xl tracking-wider text-center flex items-center justify-center gap-2">
           <Receipt className="h-5 w-5 text-gold" />
-          Bet Slip
+          Wager Slip
         </h3>
       </div>
 
