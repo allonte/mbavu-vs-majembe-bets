@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
-import { Wallet, Phone, Clock, AlertTriangle } from 'lucide-react';
+import { Wallet, AlertTriangle } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
 interface AccountBalanceProps {
@@ -48,47 +48,9 @@ export function AccountBalance({ balance, loading = false }: AccountBalanceProps
           </DialogHeader>
 
           <div className="space-y-4 mt-4">
-            <div className="p-4 rounded-lg bg-secondary border border-border space-y-3">
-              <h4 className="font-semibold text-sm text-muted-foreground uppercase tracking-wider">
-                Payment Instructions
-              </h4>
-              <div className="space-y-2">
-                <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-xs font-bold text-primary shrink-0 mt-0.5">1</div>
-                  <p className="text-sm">Go to M-Pesa on your phone</p>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-xs font-bold text-primary shrink-0 mt-0.5">2</div>
-                  <p className="text-sm">Select <strong>Lipa na M-Pesa</strong> → <strong>Pay Bill</strong></p>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-xs font-bold text-primary shrink-0 mt-0.5">3</div>
-                  <p className="text-sm">Use the payment details below:</p>
-                </div>
-              </div>
-
-              <div className="space-y-2 p-3 rounded-lg bg-accent/10 border border-accent/20">
-                <div className="flex items-center justify-center gap-2">
-                  <Phone className="h-5 w-5 text-gold" />
-                  <span className="font-display text-lg text-gold tracking-wider">Pay Bill: 542542</span>
-                </div>
-                <p className="text-center text-sm">
-                  Account Number: <strong className="text-gold">03107186836150</strong>
-                </p>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-xs font-bold text-primary shrink-0 mt-0.5">4</div>
-                <p className="text-sm">Enter the amount you wish to deposit and confirm</p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-2 p-3 rounded-lg bg-accent/5 border border-accent/10">
-              <Clock className="h-4 w-4 text-gold shrink-0 mt-0.5" />
-              <p className="text-xs text-muted-foreground">
-                <strong className="text-gold">Payment reflects after 5 minutes.</strong> Your balance will be updated automatically once the payment is confirmed.
-              </p>
-            </div>
+            <p className="text-sm text-muted-foreground text-center">
+              To deposit funds, please contact an administrator.
+            </p>
 
             <div className="flex items-start gap-2 p-3 rounded-lg bg-destructive/10 border border-destructive/30">
               <AlertTriangle className="h-4 w-4 text-destructive shrink-0 mt-0.5" />
