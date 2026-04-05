@@ -57,7 +57,7 @@ export function BetSlip({
       return;
     }
     if (accountBalance <= 0) {
-      toast.error('You cannot place a bet with zero account balance');
+      toast.error('You cannot place a wager with zero account balance');
       return;
     }
     if (stakeNum > accountBalance) {
