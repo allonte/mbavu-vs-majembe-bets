@@ -43,7 +43,7 @@ export function BetHistory({ refreshKey }: { refreshKey: number }) {
         <div className="p-4 border-b border-border bg-secondary/50">
           <h3 className="font-display text-xl tracking-wider text-center flex items-center justify-center gap-2">
             <Receipt className="h-5 w-5 text-gold" />
-            My Bet Slips ({bets.length})
+            My Wager Slips ({bets.length})
           </h3>
         </div>
 

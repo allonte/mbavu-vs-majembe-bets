@@ -81,7 +81,7 @@ export function BetSlip({
     }
 
     toast.success(
-      `Bet placed! KSH ${stakeNum.toFixed(2)} on ${selectedFighter}. Potential payout: KSH ${grossPayout.toFixed(2)}`
+      `Wager placed! KSH ${stakeNum.toFixed(2)} on ${selectedFighter}. Potential payout: KSH ${grossPayout.toFixed(2)}`
     );
 
     if (data) {
