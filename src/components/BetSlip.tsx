@@ -217,7 +217,7 @@ export function BetSlip({
             <div className="flex items-start gap-2 p-2 rounded-md bg-destructive/10 border border-destructive/20">
               <AlertTriangle className="h-3.5 w-3.5 text-destructive shrink-0 mt-0.5" />
               <p className="text-[10px] text-destructive">
-                Betting can be addictive. Not for under 18. 16% excise tax applies on all stakes.
+                Gambling can be addictive. Not for under 18. 16% excise tax applies on all stakes.
               </p>
             </div>
           </div>
