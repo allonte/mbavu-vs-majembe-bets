@@ -222,7 +222,7 @@ export function BetSlip({
             </div>
           </div>
         ) : (
-          <p className="text-center text-muted-foreground text-sm py-8">Select a fighter to place your bet</p>
+          <p className="text-center text-muted-foreground text-sm py-8">Select a fighter to place your wager</p>
         )}
       </div>
     </div>
