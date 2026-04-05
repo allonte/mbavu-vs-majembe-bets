@@ -198,7 +198,7 @@ export function BetSlip({
 
             {lastSavedBet && (
               <div className="rounded-lg border border-accent/30 bg-accent/10 p-3">
-                <p className="text-xs uppercase tracking-wider text-muted-foreground">Latest Bet Slip</p>
+                <p className="text-xs uppercase tracking-wider text-muted-foreground">Latest Wager Slip</p>
                 <div className="mt-1 flex items-center justify-between text-sm">
                   <span>{lastSavedBet.fighter}</span>
                   <span className="text-gold">× {Number(lastSavedBet.odds).toFixed(2)}</span>
