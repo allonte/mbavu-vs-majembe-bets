@@ -123,7 +123,7 @@ export function BetSlip({
                 <span className="font-semibold text-gold">KSH {accountBalance.toFixed(2)}</span>
               </div>
               <p className="text-xs text-muted-foreground mt-1">
-                Bet stake must be more than 0 and not greater than your current balance.
+                Wager stake must be more than 0 and not greater than your current balance.
               </p>
             </div>
 
