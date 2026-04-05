@@ -57,7 +57,7 @@ export function BetSlip({
       return;
     }
     if (accountBalance <= 0) {
-      toast.error('You cannot place a bet with zero account balance');
+      toast.error('You cannot place a wager with zero account balance');
       return;
     }
     if (stakeNum > accountBalance) {
@@ -81,7 +81,7 @@ export function BetSlip({
     }
 
     toast.success(
-      `Bet placed! KSH ${stakeNum.toFixed(2)} on ${selectedFighter}. Potential payout: KSH ${grossPayout.toFixed(2)}`
+      `Wager placed! KSH ${stakeNum.toFixed(2)} on ${selectedFighter}. Potential payout: KSH ${grossPayout.toFixed(2)}`
     );
 
     if (data) {
@@ -99,7 +99,7 @@ export function BetSlip({
       <div className="p-4 border-b border-border bg-secondary/50">
         <h3 className="font-display text-xl tracking-wider text-center flex items-center justify-center gap-2">
           <Receipt className="h-5 w-5 text-gold" />
-          Bet Slip
+          Wager Slip
         </h3>
       </div>
 
@@ -123,7 +123,7 @@ export function BetSlip({
                 <span className="font-semibold text-gold">KSH {accountBalance.toFixed(2)}</span>
               </div>
               <p className="text-xs text-muted-foreground mt-1">
-                Bet stake must be more than 0 and not greater than your current balance.
+                Wager stake must be more than 0 and not greater than your current balance.
               </p>
             </div>
 
@@ -193,12 +193,12 @@ export function BetSlip({
             )}
 
             <Button variant="gold" size="lg" className="w-full" onClick={handlePlaceBet} disabled={placingBet}>
-              {placingBet ? 'Placing Bet...' : user ? 'Place Bet' : 'Sign In to Bet'}
+              {placingBet ? 'Placing Wager...' : user ? 'Place Wager' : 'Sign In to Wager'}
             </Button>
 
             {lastSavedBet && (
               <div className="rounded-lg border border-accent/30 bg-accent/10 p-3">
-                <p className="text-xs uppercase tracking-wider text-muted-foreground">Latest Bet Slip</p>
+                <p className="text-xs uppercase tracking-wider text-muted-foreground">Latest Wager Slip</p>
                 <div className="mt-1 flex items-center justify-between text-sm">
                   <span>{lastSavedBet.fighter}</span>
                   <span className="text-gold">× {Number(lastSavedBet.odds).toFixed(2)}</span>
@@ -217,12 +217,12 @@ export function BetSlip({
             <div className="flex items-start gap-2 p-2 rounded-md bg-destructive/10 border border-destructive/20">
               <AlertTriangle className="h-3.5 w-3.5 text-destructive shrink-0 mt-0.5" />
               <p className="text-[10px] text-destructive">
-                Betting can be addictive. Not for under 18. 16% excise tax applies on all stakes.
+                Gambling can be addictive. Not for under 18. 16% excise tax applies on all stakes.
               </p>
             </div>
           </div>
         ) : (
-          <p className="text-center text-muted-foreground text-sm py-8">Select a fighter to place your bet</p>
+          <p className="text-center text-muted-foreground text-sm py-8">Select a fighter to place your wager</p>
         )}
       </div>
     </div>

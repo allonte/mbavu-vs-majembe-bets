@@ -65,7 +65,7 @@ export default function Index() {
             <span className="text-gold">MAJEMBE</span>
           </h1>
           <p className="mt-3 text-sm md:text-base text-muted-foreground max-w-lg mx-auto">
-            The Destroyer meets The Iron Fist in the fight of the century. Place your bets now.
+            The Destroyer meets The Iron Fist in the fight of the century. Place your wagers now.
           </p>
         </div>
       </section>

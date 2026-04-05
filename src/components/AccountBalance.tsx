@@ -54,7 +54,7 @@ export function AccountBalance({ balance, loading = false }: AccountBalanceProps
 
             <div className="flex items-start gap-2 p-3 rounded-lg bg-destructive/10 border border-destructive/30">
               <AlertTriangle className="h-4 w-4 text-destructive shrink-0 mt-0.5" />
-              <p className="text-xs text-destructive">Betting can be addictive. Not for under 18.</p>
+              <p className="text-xs text-destructive">Gambling can be addictive. Not for under 18.</p>
             </div>
           </div>
         </DialogContent>
