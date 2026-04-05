@@ -193,7 +193,7 @@ export function BetSlip({
             )}
 
             <Button variant="gold" size="lg" className="w-full" onClick={handlePlaceBet} disabled={placingBet}>
-              {placingBet ? 'Placing Bet...' : user ? 'Place Bet' : 'Sign In to Bet'}
+              {placingBet ? 'Placing Wager...' : user ? 'Place Wager' : 'Sign In to Wager'}
             </Button>
 
             {lastSavedBet && (
